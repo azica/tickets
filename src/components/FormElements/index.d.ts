@@ -28,6 +28,7 @@ declare global {
 
     type CheckboxList = FC<{
         list: CheckboxListItem[];
+        searchParamName: string;
     }>
 
     type CheckboxOnChange = {

@@ -13,7 +13,6 @@ import {
 	black,
 	liteGrey,
 } from "styles/colors";
-import { mediumDesktop } from "./media";
 
 export const theme = createTheme({
 	components: {

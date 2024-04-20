@@ -3,14 +3,16 @@ import { useSearchParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import { MuiButtonGroup } from "./styles";
 
-export const ButtonGroup: ButtonGroup = ({ buttons }) => {
+export const ButtonGroup: ButtonGroup = ({ buttons, searchParam }) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [active, setActive] = useState(buttons[0].param);
 
 	const handleButtonClick = (param: string) => {
-		const params = new URLSearchParams(searchParams);
-		params.set("currency", param);
-		setSearchParams(params);
+
+		setSearchParams(searchParams => {
+			searchParams.set(searchParam, param);
+			return searchParams;
+		})
 		setActive(param);
 	};
 

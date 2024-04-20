@@ -1,3 +1,17 @@
-export const largeDesktop = "(min-width: 1680px)";
-export const mediumDesktop = "(min-width: 1440px)";
-export const desktop = "(min-width: 1280px)";
+const size = {
+    xs: '400px', // for small screen mobile
+    sm: '767px', // for mobile screen
+    md: '1020px', // for tablets
+    lg: '1280px', // for laptops
+    xl: '1440px', // for desktop / monitors
+    xxl: '1920px', // for big screens
+}
+
+export const device = {
+    xs: `(max-width: ${size.xs})`,
+    sm: `(max-width: ${size.sm})`,
+    md: `(max-width: ${size.md})`,
+    lg: `(max-width: ${size.lg})`,
+    xl: `(max-width: ${size.xl})`,
+    xxl: `(max-width: ${size.xxl})`,
+}

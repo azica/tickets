@@ -1,8 +1,8 @@
 
 import { FC } from 'react'
-import { CardLeftSide, CardRightSide, Container, Button, Time, Date, Name, StopBox, Image } from './styles'
+import { CardLeftSide, CardRightSide, Container, Button, Time, Date, Name, StopBox, Image, TotalHours } from './styles'
 import { Grid } from '@mui/material'
-import { declinationOfNumber, formatDateString } from 'shared/helpers/utils'
+import { declinationOfNumber, formatDateString, getTotalFlightTime } from 'shared/helpers/utils'
 import { PlaneIcon, TurkishIcon } from 'assets/icons'
 
 export const TicketCard: FC<Ticket> = ({ origin, origin_name, arrival_time, arrival_date, departure_date, departure_time, destination, destination_name, stops, price }) => {
@@ -23,27 +23,24 @@ export const TicketCard: FC<Ticket> = ({ origin, origin_name, arrival_time, arri
                 <Grid container>
                     <Grid item xs={3}>
                         <Time>{departure_time}</Time>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <StopBox>
-                            {stopsText}
-                            <PlaneIcon />
-                        </StopBox>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Time>{arrival_time}</Time>
-                    </Grid>
-                </Grid>
-                <Grid container justifyContent="space-between">
-                    <Grid item xs={3}>
-                        <Name variant='h5'>{origin}, {origin_name}</Name>
+                        <Name variant='h5'>{origin}<span>, {origin_name}</span> </Name>
                         <Date>{formatDateString(departure_date)}</Date>
                     </Grid>
+
+                    <StopBox>
+                        {stopsText}
+                        <PlaneIcon />
+                        <TotalHours>
+                            {getTotalFlightTime({ departure_date, departure_time, arrival_date, arrival_time })}
+                        </TotalHours>
+                    </StopBox>
+
                     <Grid item xs={3}>
-                        <Name variant='h5'>{destination}, {destination_name}</Name>
+                        <Time>{arrival_time}</Time>
+                        <Name variant='h5'>{destination} <span>, {destination_name}</span></Name>
                         <Date>{formatDateString(arrival_date)}</Date>
                     </Grid>
-                </Grid >
+                </Grid>
             </CardRightSide>
         </Container>
     )

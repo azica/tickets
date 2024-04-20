@@ -3,21 +3,27 @@ import { Checkbox } from "components/FormElements/Checkbox";
 import { FormGroup, FormControl } from "./styles";
 import { useSearchParams } from "react-router-dom";
 
+const getQueryString = (arr: CheckboxListItem[]): string => {
+	return arr
+		.filter((item) => item.checked)
+		.map((item) => item.value)
+		.join(",");
+
+}
+
 export const CheckboxList: CheckboxList = ({
 	list,
+	searchParamName
 }) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const [listProps, setListProps] = useState<CheckboxListItem[]>(list);
 
 	useEffect(() => {
-		const checkedValues = listProps
-			.filter((item) => item.checked)
-			.map((item) => item.value)
-			.join(",");
-		const params = new URLSearchParams(searchParams);
-		params.set("stops", checkedValues);
-		setSearchParams(params);
+		setSearchParams(searchParams => {
+			searchParams.set(searchParamName, getQueryString(listProps))
+			return searchParams
+		})
 	}, [listProps]);
 
 	const valueChange: CheckboxOnChange = (newVal: {

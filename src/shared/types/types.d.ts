@@ -30,4 +30,11 @@ declare global {
         status: number;
         message: string;
     };
+
+    type FlightData = {
+        departure_date: string;
+        departure_time: string;
+        arrival_date: string;
+        arrival_time: string;
+    };
 }

@@ -9,6 +9,7 @@ declare global {
 
     type ButtonGroup = FC<{
         buttons: TabsItemProps[];
+        searchParam: string;
     }>
 
 }

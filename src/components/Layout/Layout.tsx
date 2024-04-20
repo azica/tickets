@@ -1,27 +1,23 @@
-import { Box, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 
 import { theme } from "styles/theme";
 
-import { SvgWrap, layoutStyles } from "./styles";
+import { layoutStyles } from "./styles";
 
 import { LayoutContent } from "./LayoutContent";
 import { SideBar } from "components/SideBar";
-import { GlobePlane } from "assets/icons";
+import { Plane } from "components/Plane";
+import { useIsMobile } from "shared/hooks/useMobile";
 
 const { Container, Wrapper } = layoutStyles;
 
 export const Layout = () => {
+	const isMobile = useIsMobile(1020);
+
+
 	return (
 		<ThemeProvider theme={theme}>
-			<SvgWrap
-				mt={2}
-				display="flex"
-				justifyContent="center"
-				alignItems="center">
-				<GlobePlane
-					height={70}
-					width={70} />
-			</SvgWrap>
+			<Plane />
 			<Wrapper>
 				<SideBar />
 				<Container>
