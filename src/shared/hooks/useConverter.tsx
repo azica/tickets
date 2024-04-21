@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { currencySymbols } from 'shared/constants';
 
-const useConverterPrice = (price: number, rates: Rates | undefined): string => {
-    console.log("trigger")
-    const [searchParams] = useSearchParams();
-    const defaultCurrencyCode = 'RUB';
-    const [currencyCode, setCurrencyCode] = useState<string>(searchParams.get('currency') || defaultCurrencyCode);
+const convertCurrency = (amount: number, fromCurrency: string, toCurrency: string, rates: Rates): number => {
 
-    useEffect(() => {
-        setCurrencyCode(searchParams.get('currency') || defaultCurrencyCode);
-    }, [searchParams, defaultCurrencyCode]);
+    const fromRate = fromCurrency === 'USD' ? 1 : rates[fromCurrency] || 1;
+    const toRate = toCurrency === 'USD' ? 1 : rates[toCurrency] || 1;
 
-    const convertCurrency = (amount: number, fromCurrency: string, toCurrency: string): number => {
-        if (!rates) {
-            console.error('Rates not available.');
-            return amount;
-        }
+    const amountInUSD = amount / fromRate;
+    const convertedAmount = amountInUSD * toRate;
 
-        const fromRate = fromCurrency === 'USD' ? 1 : rates[fromCurrency] || 1;
-        const toRate = toCurrency === 'USD' ? 1 : rates[toCurrency] || 1;
+    return convertedAmount;
+};
 
-        const amountInUSD = amount / fromRate;
-        const convertedAmount = amountInUSD * toRate;
+const formatPrice = (amount: number): string => {
+    return amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+}
+const useConverterPrice = (tickets: Ticket[], rates: Rates | undefined, fromCurrency: string, toCurrency: string): Ticket[] => {
+    console.log("trigger");
+    if (!rates) {
+        return tickets;
+    }
+    return tickets.map((ticket) => {
+        const { price } = ticket;
 
-        return convertedAmount;
-    };
+        const convertedPrice = convertCurrency(Number(price), fromCurrency, toCurrency, rates);
+        const formattedPrice = formatPrice(convertedPrice);
 
-    const convertedAmount = convertCurrency(price, 'RUB', currencyCode);
-
-    return `${convertedAmount.toFixed(2)} ${currencySymbols[currencyCode]}`;
+        return {
+            ...ticket,
+            price: `${formattedPrice}${currencySymbols[toCurrency]}`,
+        };
+    });
 };
 
 export default useConverterPrice;

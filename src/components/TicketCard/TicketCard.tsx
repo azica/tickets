@@ -1,10 +1,9 @@
 
 import { FC } from 'react'
-import { CardLeftSide, CardRightSide, Container, Button, Time, Date, Name, StopBox, Image, TotalHours } from './styles'
+import { CardLeftSide, CardRightSide, Container, Time, Date, Name, StopBox, Image, TotalHours, Button } from './styles'
 import { Grid } from '@mui/material'
 import { declinationOfNumber, formatDateString, getTotalFlightTime } from 'shared/helpers/utils'
 import { PlaneIcon, TurkishIcon } from 'assets/icons'
-import Price from './Price'
 
 export const TicketCard: FC<Ticket> = ({
     origin,
@@ -18,7 +17,7 @@ export const TicketCard: FC<Ticket> = ({
     stops,
     price
 }) => {
-
+    console.log("ticked cards triger")
     const stopsText = stops === 0 ? 'без пересадок' : `${stops} ${declinationOfNumber(stops, ['пересадка', 'пересадки', 'пересадок'])}`;
 
     return (
@@ -27,12 +26,9 @@ export const TicketCard: FC<Ticket> = ({
                 <Image>
                     <TurkishIcon />
                 </Image>
-                <Button variant='contained' >
+                <Button variant="contained" type="button">
                     <div>Купить</div>
-                    <div>за
-                        <Price
-                            price={price}
-                        /></div>
+                    <div>за <span>{price}</span></div>
                 </Button>
             </CardLeftSide>
             <CardRightSide>

@@ -23,7 +23,7 @@ declare global {
         arrival_time: string;
         carrier: string;
         stops: number;
-        price: number;
+        price: number | string;
     }
 
     type ErrorResponse = {

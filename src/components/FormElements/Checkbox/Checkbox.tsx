@@ -24,7 +24,10 @@ export const Checkbox: Checkbox = ({
 
 	const changeValue = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = event.target;
-		onChange({ field: name, value: checked, id: idForInput });
+		onChange({
+			field: name, value: checked, id: idForInput,
+			target: undefined
+		});
 	};
 
 	return (

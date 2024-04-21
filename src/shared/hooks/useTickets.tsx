@@ -7,7 +7,7 @@ const useTickets = (query: string | null) => {
     const [error, setError] = useState<string | null>(null);
 
     const fetchTickets = async (query: string | null) => {
-        if (!query) {
+        if (!query || query === "all") {
             setTickets(ticketsData.tickets);
             setLoading(false);
             return;

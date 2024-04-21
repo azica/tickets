@@ -32,6 +32,19 @@ declare global {
     }>
 
     type CheckboxOnChange = {
-        (value: { field: string; value: boolean; id: number | string }): void;
+        (value: {
+            target: any; field: string; value: boolean; id: number | string
+        }): void;
     }
+
+    type ButtonItem = {
+        id: number;
+        title: string;
+        path: string;
+    }
+
+    type ButtonGroup = FC<{
+        buttons: ButtonItemProps[];
+        searchParam: string;
+    }>
 }

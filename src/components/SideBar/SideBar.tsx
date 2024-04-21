@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Drawer } from '@mui/material';
 import { CheckboxList } from 'components/FormElements/CheckboxList';
-import { ButtonGroup } from 'components/ButtonGroup';
+import { ButtonGroup } from 'components/FormElements/ButtonGroup';
 import { useIsMobile } from 'shared/hooks/useMobile';
 import { CloseIcon, FilterIcon } from 'assets/icons';
 
