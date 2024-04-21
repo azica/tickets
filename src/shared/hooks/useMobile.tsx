@@ -11,14 +11,14 @@ export const useIsMobile = (maxWidth: number): boolean => {
             setIsMobile(isCurrentMobile);
         };
 
-        handleResize(); // Call initially to set the initial value
+        handleResize();
 
         window.addEventListener('resize', handleResize);
 
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [maxWidth]); // Re-run effect when maxWidth changes
+    }, [maxWidth]);
 
     return isMobile;
 }

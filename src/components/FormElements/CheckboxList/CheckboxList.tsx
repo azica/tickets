@@ -3,35 +3,27 @@ import { Checkbox } from "components/FormElements/Checkbox";
 import { FormGroup, FormControl } from "./styles";
 import { useSearchParams } from "react-router-dom";
 
-const getQueryString = (arr: CheckboxListItem[]): string => {
-	return arr
-		.filter((item) => item.checked)
-		.map((item) => item.value)
-		.join(",");
-}
-
-const getCurrentParams = (searchParams: string | null, arr: CheckboxListItem[]): CheckboxListItem[] => {
-	if (searchParams) {
-		const currentParams = searchParams.split('');
-		return arr.map((el) => currentParams.includes(el.value.toString()) ? { ...el, checked: true } : el)
-	}
-	return arr
-}
-
 export const CheckboxList: CheckboxList = ({
 	list,
 	searchParamName
 }) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const [listProps, setListProps] = useState<CheckboxListItem[]>(getCurrentParams(searchParams.get(searchParamName), list));
+	const [listProps, setListProps] = useState<CheckboxListItem[]>(() => {
+		const currentParams = searchParams.get(searchParamName);
+		return getCurrentParams(currentParams, list);
+	});
 
 	useEffect(() => {
-		setSearchParams(searchParams => {
-			searchParams.set(searchParamName, getQueryString(listProps))
-			return searchParams
-		})
-	}, [listProps]);
+		const queryParams = getQueryString(listProps);
+		if (queryParams) {
+			setSearchParams(searchParams => {
+				searchParams.set(searchParamName, queryParams);
+				return searchParams;
+			})
+		}
+
+	}, [listProps, searchParamName]);
 
 	const valueChange: CheckboxOnChange = (newVal: {
 		field: string;
@@ -67,3 +59,21 @@ export const CheckboxList: CheckboxList = ({
 		</FormControl>
 	);
 };
+
+function getCurrentParams(searchParam: string | null, list: CheckboxListItem[]): CheckboxListItem[] {
+	if (searchParam) {
+		const currentParams = searchParam.split(',');
+		return list.map((item) => ({
+			...item,
+			checked: currentParams.includes(item.value.toString())
+		}));
+	}
+	return list;
+}
+
+function getQueryString(arr: CheckboxListItem[]): string {
+	return arr
+		.filter((item) => item.checked)
+		.map((item) => item.value.toString())
+		.join(',');
+}

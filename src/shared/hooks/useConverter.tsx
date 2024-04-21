@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useCurrencyRate } from './useCurrencyRate';
 import { currencySymbols } from 'shared/constants';
 
-const useConverter = (price: number): string => {
+const useConverterPrice = (price: number, rates: Rates | undefined): string => {
+    console.log("trigger")
     const [searchParams] = useSearchParams();
     const defaultCurrencyCode = 'RUB';
     const [currencyCode, setCurrencyCode] = useState<string>(searchParams.get('currency') || defaultCurrencyCode);
@@ -12,16 +12,14 @@ const useConverter = (price: number): string => {
         setCurrencyCode(searchParams.get('currency') || defaultCurrencyCode);
     }, [searchParams, defaultCurrencyCode]);
 
-    const [rates, loading] = useCurrencyRate();
-
     const convertCurrency = (amount: number, fromCurrency: string, toCurrency: string): number => {
-        if (!rates || loading) {
-            console.error('Currency rates not available or still loading.');
-            return amount; // Return original amount if rates are not available or still loading
+        if (!rates) {
+            console.error('Rates not available.');
+            return amount;
         }
 
-        const fromRate = fromCurrency === 'USD' ? 1 : rates[fromCurrency];
-        const toRate = toCurrency === 'USD' ? 1 : rates[toCurrency];
+        const fromRate = fromCurrency === 'USD' ? 1 : rates[fromCurrency] || 1;
+        const toRate = toCurrency === 'USD' ? 1 : rates[toCurrency] || 1;
 
         const amountInUSD = amount / fromRate;
         const convertedAmount = amountInUSD * toRate;
@@ -34,4 +32,4 @@ const useConverter = (price: number): string => {
     return `${convertedAmount.toFixed(2)} ${currencySymbols[currencyCode]}`;
 };
 
-export default useConverter;
+export default useConverterPrice;
