@@ -8,7 +8,14 @@ const getQueryString = (arr: CheckboxListItem[]): string => {
 		.filter((item) => item.checked)
 		.map((item) => item.value)
 		.join(",");
+}
 
+const getCurrentParams = (searchParams: string | null, arr: CheckboxListItem[]): CheckboxListItem[] => {
+	if (searchParams) {
+		const currentParams = searchParams.split('');
+		return arr.map((el) => currentParams.includes(el.value.toString()) ? { ...el, checked: true } : el)
+	}
+	return arr
 }
 
 export const CheckboxList: CheckboxList = ({
@@ -17,7 +24,7 @@ export const CheckboxList: CheckboxList = ({
 }) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const [listProps, setListProps] = useState<CheckboxListItem[]>(list);
+	const [listProps, setListProps] = useState<CheckboxListItem[]>(getCurrentParams(searchParams.get(searchParamName), list));
 
 	useEffect(() => {
 		setSearchParams(searchParams => {

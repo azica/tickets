@@ -2,16 +2,16 @@ export const currencyButtons = [
     {
         id: 1,
         title: "RUB",
-        param: "rub",
+        param: "RUB",
     },
     {
         id: 2,
         title: "USD",
-        param: "usd",
+        param: "USD",
     },
     {
         id: 3,
         title: "EUR",
-        param: "eur",
+        param: "EUR",
     },
 ];

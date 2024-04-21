@@ -4,9 +4,23 @@ import { CardLeftSide, CardRightSide, Container, Button, Time, Date, Name, StopB
 import { Grid } from '@mui/material'
 import { declinationOfNumber, formatDateString, getTotalFlightTime } from 'shared/helpers/utils'
 import { PlaneIcon, TurkishIcon } from 'assets/icons'
+import useConverter from 'shared/hooks/useConverter'
 
-export const TicketCard: FC<Ticket> = ({ origin, origin_name, arrival_time, arrival_date, departure_date, departure_time, destination, destination_name, stops, price }) => {
+export const TicketCard: FC<Ticket> = ({
+    origin,
+    origin_name,
+    arrival_time,
+    arrival_date,
+    departure_date,
+    departure_time,
+    destination,
+    destination_name,
+    stops,
+    price
+}) => {
+
     const stopsText = stops === 0 ? 'без пересадок' : `${stops} ${declinationOfNumber(stops, ['пересадка', 'пересадки', 'пересадок'])}`;
+    const currentPrice = useConverter(price);
 
     return (
         <Container>
@@ -16,7 +30,7 @@ export const TicketCard: FC<Ticket> = ({ origin, origin_name, arrival_time, arri
                 </Image>
                 <Button variant='contained' >
                     <div>Купить</div>
-                    <div>за <span>{price} ₽</span></div>
+                    <div>за <span>{currentPrice}</span></div>
                 </Button>
             </CardLeftSide>
             <CardRightSide>

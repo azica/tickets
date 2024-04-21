@@ -93,6 +93,7 @@ export const Time = styled(Typography)`
 export const Date = styled(Typography)`
     color: ${liteGrey};
     text-align: center;
+    font-size: 14px;
 
     @media ${device.sm} {
        display: none;

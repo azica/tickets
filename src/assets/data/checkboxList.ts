@@ -2,7 +2,7 @@ export const transferCheckboxList = [
     {
         id: 1,
         label: "Все",
-        checked: true,
+        checked: false,
         disabled: false,
         value: "all"
     },

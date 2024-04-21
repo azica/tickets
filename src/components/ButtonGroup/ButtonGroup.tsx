@@ -5,7 +5,8 @@ import { MuiButtonGroup } from "./styles";
 
 export const ButtonGroup: ButtonGroup = ({ buttons, searchParam }) => {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [active, setActive] = useState(buttons[0].param);
+
+	const [active, setActive] = useState(searchParams.get(searchParam) || buttons[0].param);
 
 	const handleButtonClick = (param: string) => {
 

@@ -45,5 +45,6 @@ export const TopMobileHeader = styled(Typography)`
         width: 25px;
         height: 25px;
         color: ${blue};
+        cursor: pointer;
     }
 `
