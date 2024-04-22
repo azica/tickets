@@ -1,5 +1,4 @@
 import { MONTH_NAMES_RU, WEEKDAY_NAMES_RU } from "shared/constants";
-import { parse, format } from 'date-fns';
 
 export const declinationOfNumber = <T>(number: number, wordForms: T[]) => {
     const n = Math.abs(number) % 100;
@@ -40,37 +39,4 @@ export const formatDateString = (dateString: string): string => {
     return `${date}, ${weekdayName}`;
 };
 
-export const getTotalFlightTime = (data: FlightData): string => {
-    const { departure_date, departure_time, arrival_date, arrival_time } = data;
 
-    const departureDateTimeString = `${departure_date} ${departure_time}`;
-    const arrivalDateTimeString = `${arrival_date} ${arrival_time}`;
-
-    const departureDateTime = parse(departureDateTimeString, 'dd.MM.yy HH:mm', new Date());
-    const arrivalDateTime = parse(arrivalDateTimeString, 'dd.MM.yy HH:mm', new Date());
-
-    const timeDifferenceMs = arrivalDateTime.getTime() - departureDateTime.getTime();
-
-    if (timeDifferenceMs <= 0) {
-        return '0 ч. 0 мин.';
-    }
-
-    const totalMinutes = Math.floor(timeDifferenceMs / (1000 * 60));
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-
-    let formattedResult = '';
-
-    if (hours > 0) {
-        formattedResult += `${hours}ч.`;
-    }
-
-    if (minutes > 0) {
-        if (formattedResult.length > 0) {
-            formattedResult += ' ';
-        }
-        formattedResult += `${minutes} мин.`;
-    }
-
-    return formattedResult;
-}

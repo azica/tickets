@@ -15,7 +15,6 @@ const formatPrice = (amount: number): string => {
     return amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 }
 const useConverterPrice = (tickets: Ticket[], rates: Rates | undefined, fromCurrency: string, toCurrency: string): Ticket[] => {
-    console.log("trigger");
     if (!rates) {
         return tickets;
     }

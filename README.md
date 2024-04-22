@@ -44,3 +44,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+В проекте я использовала для 
+1. стилей - material ui так как он более подходил к дизайну 
+2. для получение текущего курса - https://v6.exchangerate-api.com
+3. для асинхроного операций установила - react query предпологая что проект будет большой и будет много асинхроный опереций 

@@ -36,7 +36,7 @@ declare global {
         departure_time: string;
         arrival_date: string;
         arrival_time: string;
-    };
+    }
 
     type Rates = { [currencyCode: string]: number };
 
