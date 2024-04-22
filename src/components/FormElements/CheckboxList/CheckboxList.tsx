@@ -29,9 +29,16 @@ export const CheckboxList: CheckboxList = ({
 		field: string;
 		value: boolean;
 	}) => {
-		setListProps(listProps.map((item) =>
-			newVal.field === `${item.id}` ? { ...item, checked: newVal.value } : item,
-		));
+		if (newVal.field === "1") {
+			setListProps(listProps.map((item) => ({
+				...item,
+				checked: newVal.value
+			})));
+		} else {
+			setListProps(listProps.map((item) =>
+				item.id === parseInt(newVal.field) ? { ...item, checked: newVal.value } : item,
+			));
+		}
 	};
 
 	return (
